@@ -1,0 +1,73 @@
+.a-btn {
+	@apply bg-indigo-500 focus:bg-indigo-700 hover:bg-indigo-700 inline-flex justify-center items-center text-center;
+	@apply shadow-md min-h-[38px] px-4 text-sm rounded-md hover:no-underline;
+	@apply transition ease-in-out duration-200;
+	@apply text-white #{!important};
+
+	&.xs {
+		@apply min-h-[30px] text-xs;
+	}
+
+	&.sm {
+		@apply min-h-[34px] text-sm;
+	}
+
+	&.lg {
+		@apply min-h-[42px] text-base;
+	}
+
+	&.xl {
+		@apply min-h-[50px] text-base px-5;
+	}
+
+	&.secondary {
+		@apply bg-white border border-gray-300;
+		@apply text-gray-700 #{!important};
+		@apply focus:border-indigo-700 hover:border-indigo-700;
+	}
+
+	&.disabled {
+		@apply bg-gray-300 text-gray-400 #{!important};
+		@apply select-none pointer-events-none cursor-default;
+	}
+
+	.icon {
+		@apply opacity-40;
+	}
+
+	.loader {
+		@apply relative ml-2;
+		&-circle {
+			@apply w-[17px] h-[16px] rounded-full;
+			@apply left-1/2 top-1/2;
+			box-shadow: inset 0 0 0 2px rgba(255, 255, 255, 0.1);
+		}
+
+		&-line-mask {
+			@apply absolute w-[16px] h-[16px] overflow-hidden;
+			-webkit-mask-image: -webkit-linear-gradient(top, #000000, rgba(0, 0, 0, 0));
+			animation: rotate 1.2s infinite linear;
+		}
+
+		&-line-mask .loader-line {
+			@apply w-[16px] h-[16px] rounded-full;
+			box-shadow: inset 0 0 0 2px #9fccc1;
+		}
+
+		@keyframes rotate {
+			0% {
+				transform: rotate(0deg);
+			}
+			100% {
+				transform: rotate(360deg);
+			}
+		}
+	}
+
+	&.right {
+		@apply flex-row-reverse;
+		.loader {
+			@apply mr-2 ml-0;
+		}
+	}
+}

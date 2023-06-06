@@ -1,0 +1,31 @@
+.a-icon, .a-avatar {
+	&.size {
+		&-s {
+			@apply min-w-[24px] w-[24px] h-[24px];
+			.material-icons {
+				@apply text-base;
+			}
+		}
+
+		&-m {
+			@apply min-w-[32px] w-[32px] h-[32px];
+			.material-icons {
+				@apply text-xl;
+			}
+		}
+
+		&-l {
+			@apply min-w-[64px] w-[64px] h-[64px];
+			.material-icons {
+				@apply text-5xl;
+			}
+		}
+
+		&-xl {
+			@apply min-w-[128px] w-[128px] h-[128px];
+			.material-icons {
+				@apply text-8xl;
+			}
+		}
+	}
+}

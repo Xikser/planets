@@ -1,0 +1,13 @@
+.skeleton {
+  @apply absolute top-0 left-0 w-full h-full z-50 animate-pulse;
+  animation: skeleton-loading 1s linear infinite alternate;
+}
+
+@keyframes skeleton-loading {
+  0% {
+    background-color: hsl(200, 20%, 80%);
+  }
+  100% {
+    background-color: hsl(200, 20%, 95%);
+  }
+}

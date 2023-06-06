@@ -1,0 +1,14 @@
+a {
+  @apply text-indigo-600;
+  &:hover {
+    @apply underline;
+  }
+
+  &:focus {
+    @apply outline-0 outline-none;
+  }
+
+  &.router-link-active {
+    @apply text-indigo-500;
+  }
+}
