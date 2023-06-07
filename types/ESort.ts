@@ -1,3 +1,5 @@
 export enum ESortType {
-	DEFAULT = 'default'
+	DEFAULT = 'Domyślne',
+	ALPHABETICAL = 'Alfabetycznie',
+	ROTATION = 'Okres rotacji (malejąco)'
 }

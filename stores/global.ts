@@ -18,7 +18,6 @@ export const useGlobalStore = defineStore(`globalStore`, {
         isDesktop: false,
         desktopBreakpoint: 1024,
     }),
-
     getters: {
         getIsClient: (state: IGlobalState): boolean => state.isClient,
         getIsMobile: (state: IGlobalState): boolean => state.isMobile,
