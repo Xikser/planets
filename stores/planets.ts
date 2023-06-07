@@ -1,6 +1,5 @@
 import {defineStore} from "pinia";
 import axios from "axios";
-import {ESortType} from "../types";
 
 interface IPlanetsState {
 	pagination: {
@@ -14,8 +13,7 @@ interface IPlanetsState {
 	loading: boolean
 	climates: Set<any>,
 	planets: [],
-	filteredPlanets: [],
-	sortType: ESortType.DEFAULT,
+	filteredPlanets: []
 }
 
 const PLANETS_URL: URL = new URL('https://swapi.dev/api/planets/?page=')
@@ -33,7 +31,6 @@ export const usePlanetsStore = defineStore('planetsStore', {
 		climates: new Set(),
 		planets: [],
 		filteredPlanets: [],
-		sortType: ESortType.DEFAULT
 	}),
 	getters: {
 		getPlanets: (state: IPlanetsState) => state.planets,
@@ -71,8 +68,6 @@ export const usePlanetsStore = defineStore('planetsStore', {
 			this.pagination.pages = payload.count / 10
 		},
 		updatePage (payload: number): void {
-			// console.log(payload)
-
 			this.pagination.current = payload
 			this.fetchData()
 		}

@@ -35,7 +35,7 @@
 				v-for="(option, i) of options"
 				:key="i"
 				class="item"
-				:class="[{'active': state.selected.name === option.name} , { 'justify-end' : isMulti }]"
+				:class="[{'active': state.selected === option} , { 'justify-end' : isMulti }]"
 				@click="handleClick(option)"
 			>
 				<a-icon
@@ -52,11 +52,6 @@
 	</div>
 </template>
 <script lang="ts">
-
-interface ISelected {
-	id?: string | number
-	name: string
-}
 
 interface IOptions {
 	id: string | number
@@ -117,7 +112,8 @@ export default defineComponent({
 					state.value.selected.push(select);
 				}
 			}
-			emit(`update:modelValue`, state.value.selected);
+
+			emit(`update:modelValue`, state.value.selected.sortType);
 			state.value.open = false;
 		};
 

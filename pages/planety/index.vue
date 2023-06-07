@@ -10,7 +10,7 @@
 		<div class="flex flex-col items-center justify-center gap-y-8">
 			<a-box
 				class="w-full flex flex-col gap-y-2"
-				v-for="(planet, index) in getPlanets"
+				v-for="(planet, index) in sortedItems"
 				:key="`planet-${index}`"
 			>
 				<h3>
@@ -64,18 +64,22 @@ export default defineComponent({
 		const {fetchData, updatePage} = usePlanetsStore()
 		const {getPlanets, getPagination} = storeToRefs(planetsStore);
 		const sortConfig = ref([planetSortConfig]);
-
+		const sortOption = ref(ESortType);
 		const { sortBy } = useUtils<{ name: string; rotation: number }>();
 
-		const updateSortOption = (newOption: ESortType): void => {
-		    const sortKeys = {
-		        [ESortType.ALPHABETICAL]: 'name',
-		        [ESortType.ROTATION]: 'rotation',
-		    };
+		const sortedItems = computed(() => {
+	        const sortKeys = {
+	            [ESortType.ALPHABETIC]: 'name',
+	            [ESortType.NUMERIC]: 'rotation',
+	        };
 
-		    const key = sortKeys[newOption.name] || ESortType.DEFAULT;
-		    sortBy(newOption.name, getPlanets.value, key);
-		}
+	        const key = sortKeys[sortOption.value] || ESortType.DEFAULT;
+	        return sortBy(sortOption.value, getPlanets.value, key);
+	    });
+
+	    const updateSortOption = (newOption: ESortType): void => {
+	        sortOption.value = newOption;
+	    }
 
 		onMounted(() => {
 			fetchData()
@@ -86,7 +90,8 @@ export default defineComponent({
 			getPagination,
 			updatePage,
 			sortConfig,
-			updateSortOption
+			updateSortOption,
+			sortedItems
 		}
 	}
 })

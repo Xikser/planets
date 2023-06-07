@@ -30,7 +30,7 @@ export default defineComponent({
 		}
 	},
 	emits: ['sortChanged'],
-	setup(_, { emit }) {
+	setup(props, { emit }) {
 		const selected = ref(localStorage.getItem('sortOption') || '')
 
 		watch(selected, (newOption: any) => {
