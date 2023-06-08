@@ -1,18 +1,32 @@
 import {ESortType} from "../../types";
-import {ISortConfig} from "../../interfaces";
 
-const planetSortType = {
+interface IPlanetSortType {
 	DEFAULT: {
 		sortType: ESortType.DEFAULT,
-		name: 'Domyślne'
+		name: string
+	}
+	ALPHABETIC: {
+		sortType: ESortType.ALPHABETIC,
+		name: string
+	}
+	ROTATION: {
+		sortType: ESortType.NUMERIC,
+		name: string
+	}
+}
+
+const planetSortType: IPlanetSortType = {
+	DEFAULT: {
+		sortType: ESortType.DEFAULT,
+		name: 'Default'
 	},
 	ALPHABETIC: {
 		sortType: ESortType.ALPHABETIC,
-		name: 'Alfabetycznie'
+		name: 'Alphabetic (A-Z)'
 	},
 	ROTATION: {
 		sortType: ESortType.NUMERIC,
-		name: 'Okres rotacji (rosnąco)'
+		name: 'Rotation period (ascending)'
 	}
 }
 

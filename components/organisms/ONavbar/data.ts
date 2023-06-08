@@ -2,26 +2,22 @@ import {INavData} from "./interfaces";
 
 export const navData: INavData[] = [
     {
-        title: 'Strona główna',
+        title: 'Home',
         href: '/',
-        icon: 'home',
-        disabled: false
+        icon: 'home'
     },{
-        title: 'Planety',
-        href: '/planety',
-        icon: 'public',
-        disabled: false
+        title: 'Planets',
+        href: '/planets',
+        icon: 'public'
     },
     {
-        title: 'Ludzie',
-        href: '/ludzie',
-        icon: 'group',
-        disabled: true
+        title: 'People',
+        href: '/people',
+        icon: 'group'
     },
     {
-        title: 'Filmy',
-        href: '/filmy',
-        icon: 'movie',
-        disabled: true
+        title: 'Movies',
+        href: '/movies',
+        icon: 'movie'
     }
 ]

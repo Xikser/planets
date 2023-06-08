@@ -15,8 +15,8 @@ import {storeToRefs} from "pinia";
 export default defineComponent({
 	components: {ONavbar, ABox},
 	setup() {
-		const globalStore = useGlobalStore()
 		const {setIsClient, setIsMobile, setIsTablet, setIsDesktop} = useGlobalStore()
+		const globalStore = useGlobalStore()
 		const {getIsClient} = storeToRefs(globalStore)
 
 		const handleViewport = (): void => {

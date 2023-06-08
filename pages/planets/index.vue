@@ -1,11 +1,14 @@
 <template>
 	<div class="container container-custom-setup py-24 gap-y-8 flex flex-col">
-		<h1 class="text-2xl font-bold">Planety:</h1>
+		<h1 class="text-2xl font-bold">Planets:</h1>
 
-		<o-sort-items
-			:sort-types="sortConfig"
-			@sort-changed="updateSortOption"
-		/>
+		<template v-if="getPlanets && getPlanets.length">
+			<m-sort-items
+				:sort-types="sortConfig"
+				:items="getPlanets"
+				@update-sort-items="updateSortItems"
+			/>
+		</template>
 
 		<div class="flex flex-col items-center justify-center gap-y-8">
 			<a-box
@@ -14,19 +17,19 @@
 				:key="`planet-${index}`"
 			>
 				<h3>
-					Nazwa: <span>{{ planet.name }}</span>
+					Name: <span>{{ planet.name }}</span>
 				</h3>
 				<h3>
-					Okres rotacji (dni): <span>{{ planet.rotation }}</span>
+					Rotation period (days): <span>{{ planet.rotation }}</span>
 				</h3>
 				<h3>
-					Klimat: <span>{{ planet.climates.toString().split(',').join(', ') }}</span>
+					Climate: <span>{{ planet.climates.toString().split(',').join(', ') }}</span>
 				</h3>
 				<h3>
-					Grawitacja: <span>{{ planet.gravity }}</span>
+					Gravity: <span>{{ planet.gravity }}</span>
 				</h3>
 				<h3>
-					Stworzona: <span>{{ planet.created }}</span>
+					Created: <span>{{ planet.created }}</span>
 				</h3>
 				<h3>
 					Url: <a href="{{ planet.url }}" target="_blank">{{ planet.url }}</a>
@@ -45,44 +48,31 @@
 </template>
 
 <script lang="ts">
-import {defineComponent, onMounted, ref, computed} from "vue";
+import {defineComponent, onMounted, ref} from "vue";
 import {storeToRefs} from "pinia";
 import {usePlanetsStore} from "../../stores/planets";
 import ABox from '@/components/atoms/ABox/ABox'
-import OSortItems from '@/components/organisms/OSortItems/OSortItems'
+import MSortItems from '@/components/molecules/MSortItems/MSortItems'
 import MPagination from "../../components/molecules/MPagination/MPagination.vue";
 import {planetSortConfig} from './config'
 
-import useUtils from '../../utils/useUtils'
-import {ESortType} from "../../types";
-
 export default defineComponent({
 	name: "Planets",
-	components: {MPagination, ABox, OSortItems},
+	components: {MPagination, ABox, MSortItems},
 	setup() {
 		const planetsStore = usePlanetsStore();
 		const {fetchData, updatePage} = usePlanetsStore()
 		const {getPlanets, getPagination} = storeToRefs(planetsStore);
+
 		const sortConfig = ref([planetSortConfig]);
-		const sortOption = ref(ESortType);
-		const { sortBy } = useUtils<{ name: string; rotation: number }>();
+		const sortedItems = ref([])
 
-		const sortedItems = computed(() => {
-	        const sortKeys = {
-	            [ESortType.ALPHABETIC]: 'name',
-	            [ESortType.NUMERIC]: 'rotation',
-	        };
-
-	        const key = sortKeys[sortOption.value] || ESortType.DEFAULT;
-	        return sortBy(sortOption.value, getPlanets.value, key);
-	    });
-
-	    const updateSortOption = (newOption: ESortType): void => {
-	        sortOption.value = newOption;
-	    }
+		const updateSortItems = (items): void => {
+			sortedItems.value = items;
+		}
 
 		onMounted(() => {
-			fetchData()
+			new Promise(fetchData).then(() => sortedItems.value = getPlanets.value)
 		})
 
 		return {
@@ -90,8 +80,8 @@ export default defineComponent({
 			getPagination,
 			updatePage,
 			sortConfig,
-			updateSortOption,
-			sortedItems
+			sortedItems,
+			updateSortItems,
 		}
 	}
 })

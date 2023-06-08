@@ -72,7 +72,7 @@ export default defineComponent({
 		},
 		options: {
 			type: Array as PropType<IOptions[]>,
-			required: true,
+			required: false,
 		},
 		tabindex: {
 			type: Number,
