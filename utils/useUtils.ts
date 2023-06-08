@@ -17,12 +17,6 @@ const useUtils = <T extends object>(): IUseUtils<T> => {
 	};
 
 	const sortBy = <K extends keyof T>(sortType: ESortType, valueToSort: T[], sortKey: K): T[] => {
-		// console.log(sortType)
-		// console.log(ESortType.ALPHABETIC)
-
-		// console.log(valueToSort)
-		// console.log(sortKey)
-
 	    let sortedValueToSort: T[] = deepCopy(valueToSort);
 
 	    if (Number(sortType) === ESortType.DEFAULT || typeof sortType === 'undefined') {
@@ -30,11 +24,6 @@ const useUtils = <T extends object>(): IUseUtils<T> => {
 	    }
 
 	    if (Number(sortType) === ESortType.ALPHABETIC) {
-		    // console.log(typeof Number(sortType))
-            // console.log(typeof ESortType.ALPHABETIC)
-            // console.log(Number(sortType) === ESortType.ALPHABETIC)
-            // console.log(Number(sortType) == ESortType.ALPHABETIC)
-
 	        sortedValueToSort.sort((a: T, b: T) => String(a[sortKey]).localeCompare(String(b[sortKey])));
 	    }
 
