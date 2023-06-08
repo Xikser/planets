@@ -7,9 +7,8 @@
 		<div v-show="!getIsLoading" class="py-24 gap-y-8 flex flex-col w-full h-full">
 			<h1 class="text-2xl font-bold">Planets:</h1>
 
-			<template v-if="getPlanets && getPlanets.length">
+			<template v-if="sortedItems && sortedItems.length">
 				<m-sort-items
-					v-if="getPlanets && getPlanets.length"
 					:sort-types="sortConfig"
 					:items="getPlanets"
 					@update-sort-items="updateSortItems"
@@ -55,7 +54,7 @@
 </template>
 
 <script lang="ts">
-import {defineComponent, onMounted, ref, reactive} from "vue";
+import {defineComponent, onMounted, ref, reactive, watch} from "vue";
 import {storeToRefs} from "pinia";
 import {useGlobalStore} from "../../stores/global";
 import {usePlanetsStore} from "../../stores/planets";
@@ -64,16 +63,18 @@ import ALoading from '@/components/atoms/ALoading/ALoading'
 import MSortItems from '@/components/molecules/MSortItems/MSortItems'
 import MPagination from "../../components/molecules/MPagination/MPagination.vue";
 import {planetSortConfig} from './config'
+import {useFetch} from "nuxt/app";
 
 export default defineComponent({
 	name: "Planets",
 	components: {MPagination, ALoading, ABox, MSortItems},
 	setup() {
 		const global = useGlobalStore()
+		const {setLoading} = useGlobalStore()
 		const {getIsLoading, getIsClient} = storeToRefs(global)
 
 		const planetsStore = usePlanetsStore();
-		const {fetchData, updatePage} = usePlanetsStore()
+		const {setResources, updatePage} = usePlanetsStore()
 		const {getPlanets, getPagination} = storeToRefs(planetsStore);
 
 		const sortConfig = ref([planetSortConfig]);
@@ -83,8 +84,16 @@ export default defineComponent({
 			sortedItems.value = items;
 		}
 
-		onMounted( async() => {
-			await fetchData();
+		watch(getPlanets, (newValue) => {
+			sortedItems.value = reactive(JSON.parse(localStorage.getItem("sortedItems"))) || newValue
+		})
+
+		useFetch('/api/planets').then((r) => {
+			setResources(r.data.value)
+		})
+
+		onMounted(async () => {
+			setLoading(true)
 
 			if (getIsClient.value) {
 				sortedItems.value = reactive(JSON.parse(localStorage.getItem("sortedItems"))) || getPlanets.value

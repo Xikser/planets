@@ -37,7 +37,8 @@ export const usePlanetsStore = defineStore('planetsStore', {
 	}),
 	getters: {
 		getPlanets: (state: IPlanetsState) => state.planets,
-		getPagination: (state: IPlanetsState) => state.pagination
+		getPagination: (state: IPlanetsState) => state.pagination,
+		getCurrentPagination: (state: IPlanetsState) => state.pagination.current
 	},
 	actions: {
 		async fetchData (): Promise<void> {
@@ -49,7 +50,8 @@ export const usePlanetsStore = defineStore('planetsStore', {
 				throw new Error(`Fetch Data Failed --> ${e}`)
 			})
 		},
-		setResources (payload): void {
+		async setResources (payload): Promise<void> {
+			// global.setLoading(true)
 			const uniqueClimates: Set<any> = new Set();
 
 			this.planets = payload.results.map((planet) => {

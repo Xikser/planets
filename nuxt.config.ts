@@ -49,15 +49,9 @@ export default defineNuxtConfig({
 	pages: true,
 	components: true,
 	modules: [
+		'@pinia/nuxt',
 		`@nuxtjs/tailwindcss`,
 		`@nuxt/image-edge`,
-		`@pinia/nuxt`,
-		[
-			`@nuxtjs/i18n`, {
-			locales: [`en`, `pl`],
-			defaultLocale: `pl`,
-		},
-		],
 		`@nuxtjs/robots`,
 	],
 	tailwindcss: {
@@ -75,8 +69,14 @@ export default defineNuxtConfig({
 		theme: {extend: {colors: {'gray-200': `#E5E7EB`}}},
 		exposeConfig: true,
 	},
-	imports: {dirs: [`./stores`]},
-	pinia: {autoImports: [`defineStore`, `acceptHMRUpdate`]},
+	imports: {dirs: ['./stores']},
+	pinia: {
+		autoImports: [
+			// automatically imports defineStore
+			'defineStore', // import { defineStore } from 'pinia'
+			['defineStore', 'definePiniaStore'], // import { defineStore as definePiniaStore } from 'pinia'
+		],
+	},
 	image: {dir: `assets/images`},
 	vite: {css: {preprocessorOptions: {sass: {additionalData: `@import "@/assets/scss/main.scss" as *`}}}},
 	css: [`~/assets/css/tailwind.css`, `~/assets/scss/main.scss`],
