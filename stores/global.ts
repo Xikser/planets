@@ -6,7 +6,8 @@ interface IGlobalState {
     isMobile: boolean
     isTablet: boolean
     desktopBreakpoint: number
-    isDesktop: boolean
+    isDesktop: boolean,
+    loading: boolean
 }
 
 export const useGlobalStore = defineStore(`globalStore`, {
@@ -17,14 +18,21 @@ export const useGlobalStore = defineStore(`globalStore`, {
         isTablet: false,
         isDesktop: false,
         desktopBreakpoint: 1024,
+        loading: false
     }),
     getters: {
         getIsClient: (state: IGlobalState): boolean => state.isClient,
         getIsMobile: (state: IGlobalState): boolean => state.isMobile,
         getIsTablet: (state: IGlobalState): boolean => state.isTablet,
         getIsDesktop: (state: IGlobalState): boolean => !state.isMobile && !state.isTablet,
+        getIsLoading: (state: IGlobalState): boolean => state.loading
     },
     actions: {
+        setLoading(payload): void {
+            console.log(payload)
+
+            this.loading = payload
+        },
         setIsClient(): void {
             // @ts-ignore
             this.isClient = typeof window !== `undefined` && !process.server;

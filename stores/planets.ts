@@ -1,5 +1,6 @@
 import {defineStore} from "pinia";
 import axios from "axios";
+import {useGlobalStore} from './global'
 
 interface IPlanetsState {
 	pagination: {
@@ -16,7 +17,9 @@ interface IPlanetsState {
 	filteredPlanets: []
 }
 
+const global = useGlobalStore()
 const PLANETS_URL: URL = new URL('https://swapi.dev/api/planets/?page=')
+
 export const usePlanetsStore = defineStore('planetsStore', {
 	state: (): IPlanetsState => ({
 		pagination: {
@@ -38,9 +41,10 @@ export const usePlanetsStore = defineStore('planetsStore', {
 	},
 	actions: {
 		async fetchData (): Promise<void> {
+			global.setLoading(true)
+
 			await axios.get(`${PLANETS_URL}${this.pagination.current}`).then(r => {
 				this.setResources(r.data)
-				// console.log(r.data)
 			}).catch((e) => {
 				throw new Error(`Fetch Data Failed --> ${e}`)
 			})
@@ -66,6 +70,8 @@ export const usePlanetsStore = defineStore('planetsStore', {
 			this.pagination.prev = payload.previous
 			this.pagination.next = payload.next
 			this.pagination.pages = payload.count / 10
+
+			global.setLoading(false)
 		},
 		updatePage (payload: number): void {
 			this.pagination.current = payload
