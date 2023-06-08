@@ -58,7 +58,7 @@ interface IOptions {
 	name: string
 }
 
-import {defineComponent, PropType, ref, toRefs} from "vue";
+import {defineComponent, PropType, ref, toRefs, onMounted} from "vue";
 import AIcon from "../AIcon/AIcon.vue";
 import {ESizes, EVariant} from "@/types";
 

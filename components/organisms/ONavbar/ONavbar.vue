@@ -138,7 +138,7 @@ export default defineComponent({
 .nav {
 	&-list {
 		@apply pb-6;
-		@apply flex flex-col gap-y-2 border-b border-solid border-gray-700;
+		@apply flex flex-col gap-y-5 border-b border-solid border-gray-700;
 	}
 
 	&-item {

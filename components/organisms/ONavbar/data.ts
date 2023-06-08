@@ -9,15 +9,5 @@ export const navData: INavData[] = [
         title: 'Planets',
         href: '/planets',
         icon: 'public'
-    },
-    {
-        title: 'People',
-        href: '/people',
-        icon: 'group'
-    },
-    {
-        title: 'Movies',
-        href: '/movies',
-        icon: 'movie'
     }
 ]

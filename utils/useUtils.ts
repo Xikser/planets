@@ -1,5 +1,5 @@
-import { ref, toRaw, reactive } from "vue";
 import {ESortType} from "../types";
+import {type} from "os";
 
 type IUseUtils<T extends object> = {
 	sortBy: <K extends keyof T>(sortType: ESortType, sortValue: T[], sortKey: K) => T[]
@@ -17,17 +17,28 @@ const useUtils = <T extends object>(): IUseUtils<T> => {
 	};
 
 	const sortBy = <K extends keyof T>(sortType: ESortType, valueToSort: T[], sortKey: K): T[] => {
+		// console.log(sortType)
+		// console.log(ESortType.ALPHABETIC)
+
+		// console.log(valueToSort)
+		// console.log(sortKey)
+
 	    let sortedValueToSort: T[] = deepCopy(valueToSort);
 
-	    if (sortType === ESortType.DEFAULT || typeof sortType === 'undefined') {
+	    if (Number(sortType) === ESortType.DEFAULT || typeof sortType === 'undefined') {
 	        return sortedValueToSort;
 	    }
 
-	    if (sortType === ESortType.ALPHABETIC) {
+	    if (Number(sortType) === ESortType.ALPHABETIC) {
+		    // console.log(typeof Number(sortType))
+            // console.log(typeof ESortType.ALPHABETIC)
+            // console.log(Number(sortType) === ESortType.ALPHABETIC)
+            // console.log(Number(sortType) == ESortType.ALPHABETIC)
+
 	        sortedValueToSort.sort((a: T, b: T) => String(a[sortKey]).localeCompare(String(b[sortKey])));
 	    }
 
-	    if (sortType === ESortType.NUMERIC) {
+	    if (Number(sortType) === ESortType.NUMERIC) {
 	        sortedValueToSort.sort((a: T, b: T) => Number(a[sortKey]) - Number(b[sortKey]));
 	    }
 

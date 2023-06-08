@@ -9,6 +9,7 @@
 
 			<template v-if="getPlanets && getPlanets.length">
 				<m-sort-items
+					v-if="getPlanets && getPlanets.length"
 					:sort-types="sortConfig"
 					:items="getPlanets"
 					@update-sort-items="updateSortItems"
@@ -54,7 +55,7 @@
 </template>
 
 <script lang="ts">
-import {defineComponent, onMounted, ref} from "vue";
+import {defineComponent, onMounted, ref, reactive} from "vue";
 import {storeToRefs} from "pinia";
 import {useGlobalStore} from "../../stores/global";
 import {usePlanetsStore} from "../../stores/planets";
@@ -69,7 +70,7 @@ export default defineComponent({
 	components: {MPagination, ALoading, ABox, MSortItems},
 	setup() {
 		const global = useGlobalStore()
-		const {getIsLoading} = storeToRefs(global)
+		const {getIsLoading, getIsClient} = storeToRefs(global)
 
 		const planetsStore = usePlanetsStore();
 		const {fetchData, updatePage} = usePlanetsStore()
@@ -82,14 +83,13 @@ export default defineComponent({
 			sortedItems.value = items;
 		}
 
-		onMounted(async () => {
-			try {
-				await fetchData();
-				sortedItems.value = getPlanets.value;
-			} catch (error) {
-				console.error('Failed to fetch data:', error);
+		onMounted( async() => {
+			await fetchData();
+
+			if (getIsClient.value) {
+				sortedItems.value = reactive(JSON.parse(localStorage.getItem("sortedItems"))) || getPlanets.value
 			}
-		});
+		})
 
 		return {
 			getPlanets,

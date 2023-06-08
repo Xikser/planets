@@ -29,8 +29,6 @@ export const useGlobalStore = defineStore(`globalStore`, {
     },
     actions: {
         setLoading(payload): void {
-            console.log(payload)
-
             this.loading = payload
         },
         setIsClient(): void {
