@@ -67,7 +67,7 @@ export default defineComponent({
 	components: {AIcon},
 	props: {
 		selected: {
-			type: Object,
+			type: Object as PropType<any>,
 			required: false,
 		},
 		options: {

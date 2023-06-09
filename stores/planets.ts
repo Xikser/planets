@@ -1,6 +1,7 @@
 import axios from "axios";
 import {defineStore} from "pinia";
 import {useGlobalStore} from './global'
+import {useFetch} from "nuxt/app";
 
 interface IPlanetsState {
 	pagination: {
@@ -18,7 +19,6 @@ interface IPlanetsState {
 }
 
 const global = useGlobalStore()
-const PLANETS_URL: URL = new URL('https://swapi.dev/api/planets/?page=')
 
 export const usePlanetsStore = defineStore('planetsStore', {
 	state: (): IPlanetsState => ({
@@ -38,20 +38,9 @@ export const usePlanetsStore = defineStore('planetsStore', {
 	getters: {
 		getPlanets: (state: IPlanetsState) => state.planets,
 		getPagination: (state: IPlanetsState) => state.pagination,
-		getCurrentPagination: (state: IPlanetsState) => state.pagination.current
 	},
 	actions: {
-		async fetchData (): Promise<void> {
-			global.setLoading(true)
-
-			await axios.get(`${PLANETS_URL}${this.pagination.current}`).then(r => {
-				this.setResources(r.data)
-			}).catch((e) => {
-				throw new Error(`Fetch Data Failed --> ${e}`)
-			})
-		},
-		async setResources (payload): Promise<void> {
-			// global.setLoading(true)
+		async setResources(payload): Promise<void> {
 			const uniqueClimates: Set<any> = new Set();
 
 			this.planets = payload.results.map((planet) => {
@@ -74,10 +63,6 @@ export const usePlanetsStore = defineStore('planetsStore', {
 			this.pagination.pages = payload.count / 10
 
 			global.setLoading(false)
-		},
-		updatePage (payload: number): void {
-			this.pagination.current = payload
-			this.fetchData()
 		}
 	}
 })

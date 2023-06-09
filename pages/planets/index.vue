@@ -1,6 +1,6 @@
 <template>
 	<div class="w-full h-full container container-custom-setup">
-		<div v-show="getIsLoading" class="">
+		<div v-show="getIsLoading">
 			<a-loading/>
 		</div>
 
@@ -46,8 +46,8 @@
 				:pages="Number(getPagination.pages)"
 				:prev="getPagination.prev"
 				:next="getPagination.next"
-				:current="getPagination.current"
-				@update-pagination="updatePage"
+				:current="getPagination.current || 1"
+				@update-pagination="onPageChange"
 			/>
 		</div>
 	</div>
@@ -63,7 +63,7 @@ import ALoading from '@/components/atoms/ALoading/ALoading'
 import MSortItems from '@/components/molecules/MSortItems/MSortItems'
 import MPagination from "../../components/molecules/MPagination/MPagination.vue";
 import {planetSortConfig} from './config'
-import {useFetch} from "nuxt/app";
+import fetchPlanets from "../../composables/fetchPlanets";
 
 export default defineComponent({
 	name: "Planets",
@@ -74,7 +74,6 @@ export default defineComponent({
 		const {getIsLoading, getIsClient} = storeToRefs(global)
 
 		const planetsStore = usePlanetsStore();
-		const {setResources, updatePage} = usePlanetsStore()
 		const {getPlanets, getPagination} = storeToRefs(planetsStore);
 
 		const sortConfig = ref([planetSortConfig]);
@@ -88,22 +87,23 @@ export default defineComponent({
 			sortedItems.value = reactive(JSON.parse(localStorage.getItem("sortedItems"))) || newValue
 		})
 
-		useFetch('/api/planets').then((r) => {
-			setResources(r.data.value)
-		})
+		// fetch data on page load
+		fetchPlanets(1)
 
 		onMounted(async () => {
-			setLoading(true)
-
 			if (getIsClient.value) {
 				sortedItems.value = reactive(JSON.parse(localStorage.getItem("sortedItems"))) || getPlanets.value
 			}
 		})
 
+		const onPageChange = (payload: number): void => {
+			fetchPlanets(payload)
+		}
+
 		return {
 			getPlanets,
 			getPagination,
-			updatePage,
+			onPageChange,
 			sortConfig,
 			sortedItems,
 			updateSortItems,

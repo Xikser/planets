@@ -16,11 +16,12 @@
 
 <script lang="ts">
 import ASelect from '@/components/atoms/ASelect/ASelect'
-import {computed, defineComponent, ref, watch, toRefs, reactive, toRaw} from "vue";
+import {computed, defineComponent, ref, watch, toRefs, reactive, toRaw, PropType} from "vue";
 import {useGlobalStore} from "../../../stores/global";
 import {storeToRefs} from "pinia";
 import {ESortType} from "../../../types";
 import useUtils from "../../../utils/useUtils";
+import {IPlanetSortType} from '../../../pages/planets/config'
 
 export default defineComponent({
 	name: 'SortItems',
@@ -29,7 +30,7 @@ export default defineComponent({
 	},
 	props: {
 		sortTypes: {
-			type: Object,
+			type: Object as PropType<IPlanetSortType>,
 			required: true
 		},
 		items: {

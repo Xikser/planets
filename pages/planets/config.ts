@@ -1,6 +1,6 @@
 import {ESortType} from "../../types";
 
-interface IPlanetSortType {
+export interface IPlanetSortType {
 	DEFAULT: {
 		sortType: ESortType.DEFAULT,
 		name: string
