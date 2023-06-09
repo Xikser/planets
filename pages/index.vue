@@ -1,9 +1,9 @@
 <template>
 	<div class="container container-custom-setup created">
-		<nuxt-img
-			format="webp"
-			src="/logo.png"
+		<img
+			src="../assets/images/logo.png"
 			class="max-w-[600px] w-full"
+			alt="logo"
 		/>
 
 		<h1>Created by: Daniel Wyskup</h1>

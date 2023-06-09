@@ -1,8 +1,8 @@
 <template>
-	<div class="pagination w-full flex items-center justify-center gap-x-5">
+	<div class="pagination mx-auto flex items-center justify-center gap-x-5 relative">
 		<a-btn
 			icon="arrow_back_ios"
-			class="prev-button"
+			class="prev-button absolute w-1/2 max-w-[47%] md:max-w-auto md:w-auto left-0 md:left-[-80px] top-[60px] md:top-0"
 			:variant="prev ? EVariant.PRIMARY : EVariant.DISABLED"
 			@click="prevPage"
 		/>
@@ -24,7 +24,7 @@
 
 		<a-btn
 			icon="arrow_forward_ios"
-			class="next-button"
+			class="next-button absolute right-0 max-w-[47%] md:max-w-auto w-1/2 md:w-auto md:right-[-80px] top-[60px] md:top-0"
 			:variant="next ? EVariant.PRIMARY : EVariant.DISABLED"
 			@click="nextPage"
 		/>

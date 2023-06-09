@@ -15,9 +15,8 @@
 		ref="navRef"
 	>
 		<div class="logo">
-			<nuxt-img
-				format="webp"
-				src="/logo.png"
+			<img
+				src="../../../assets/images/logo.png"
 				class="w-16 h-16"
 			/>
 			<a-icon

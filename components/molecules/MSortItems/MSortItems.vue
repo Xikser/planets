@@ -2,7 +2,7 @@
 	<div class="sort-box flex items-center justify-end w-full gap-x-4">
 		<h3>Sort by:</h3>
 
-		<div class="min-w-[260px]">
+		<div class="min-w-[130px]">
 			<a-select
 				v-for="(item, index) in Object.values(sortTypes)"
 				:key="`select-${index}`"

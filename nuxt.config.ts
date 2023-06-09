@@ -88,5 +88,5 @@ export default defineNuxtConfig({
 			},
 		},
 	},
-	env: {baseURL: `http://localhost:3100`, authURL: `http://localhost:3100/auth`},
+	env: {baseURL: `https://localhost:3100`},
 });
