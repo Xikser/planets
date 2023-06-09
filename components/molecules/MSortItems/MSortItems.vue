@@ -60,7 +60,7 @@ export default defineComponent({
 
 		watch(selected, (newOption: any) => {
 			if (getIsClient) {
-				localStorage.setItem('sortOption', newOption)
+				localStorage.setItem('sortOption', newOption.sortType)
 			}
 
 			updateSortOption(newOption)
@@ -88,7 +88,7 @@ export default defineComponent({
 		})
 
 		const updateSortOption = (newOption: ESortType): void => {
-			sortOption.value = newOption;
+			sortOption.value = newOption.sortType;
 		}
 
 		return {

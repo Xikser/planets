@@ -113,7 +113,7 @@ export default defineComponent({
 				}
 			}
 
-			emit(`update:modelValue`, state.value.selected.sortType);
+			emit(`update:modelValue`, state.value.selected);
 			state.value.open = false;
 		};
 
